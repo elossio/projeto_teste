@@ -1,3 +1,9 @@
+"""Funções auxiliares para análises estatísticas.
+
+Inclui testes de Levene, t de Student (independente), Mann-Whitney
+e utilitário para remoção de outliers.
+"""
+
 from scipy.stats import (
     levene,
     mannwhitneyu,
@@ -6,6 +12,13 @@ from scipy.stats import (
 
 
 def analise_levene(dataframe, alfa=0.05, centro="mean"):
+    """Executa o teste de Levene para igualdade de variâncias.
+
+    Args:
+        dataframe: DataFrame com duas ou mais colunas numéricas a comparar.
+        alfa: Nível de significância para a decisão.
+        centro: Estatística de centralidade usada pelo teste ("mean" ou "median").
+    """
     print("Teste de Levene")
 
     estatistica_levene, valor_p_levene = levene(
@@ -27,6 +40,14 @@ def analise_ttest_ind(
     variancias_iguais=True,
     alternativa="two-sided",
 ):
+    """Executa o teste t de Student para amostras independentes.
+
+    Args:
+        dataframe: DataFrame com duas colunas numéricas a comparar.
+        alfa: Nível de significância para a decisão.
+        variancias_iguais: Se True, assume variâncias iguais (teste padrão).
+        alternativa: Tipo de hipótese alternativa ("two-sided", "less", "greater").
+    """
     print("Teste t de Student")
     estatistica_ttest, valor_p_ttest = ttest_ind(
         *[dataframe[coluna] for coluna in dataframe.columns],
@@ -47,6 +68,13 @@ def analise_mannwhitneyu(
     alfa=0.05,
     alternativa="two-sided",
 ):
+    """Executa o teste de Mann-Whitney para duas amostras independentes.
+
+    Args:
+        dataframe: DataFrame com duas colunas numéricas a comparar.
+        alfa: Nível de significância para a decisão.
+        alternativa: Tipo de hipótese alternativa ("two-sided", "less", "greater").
+    """
 
     print("Teste de Mann-Whitney")
     estatistica_mw, valor_p_mw = mannwhitneyu(
@@ -63,6 +91,12 @@ def analise_mannwhitneyu(
 
 
 def remove_outliers(dados, largura_bigodes=1.5):
+    """Remove outliers via regra do IQR (bigodes de boxplot).
+
+    Args:
+        dados: Série pandas com valores numéricos.
+        largura_bigodes: Multiplicador do IQR para limites inferior e superior.
+    """
     q1 = dados.quantile(0.25)
     q3 = dados.quantile(0.75)
     iqr = q3 - q1

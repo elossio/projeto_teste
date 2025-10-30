@@ -6,7 +6,6 @@ the project root, data directories, and report/image folders.
 
 from pathlib import Path
 
-
 PASTA_PROJETO = Path(__file__).resolve().parents[2]
 
 PASTA_DADOS = PASTA_PROJETO / "dados"
