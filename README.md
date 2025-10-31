@@ -16,7 +16,6 @@ A FAZER faca um texto explicando o contexto
 ├── dados              <- Arquivos de dados para o projeto.
 |
 ├── notebooks          <- Jupyter Notebooks
-
 │
 |   └──src             <- Código-fonte para uso neste projeto.
 |      │
